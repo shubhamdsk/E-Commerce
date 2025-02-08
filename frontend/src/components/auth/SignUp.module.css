@@ -1,0 +1,14 @@
+.inputbox {
+  display: block;
+  margin: 5px;
+  padding: 7px;
+  width: 300px;
+  border-radius: 10px;
+  border: 1px solid rgb(20, 156, 193);
+}
+.register {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}

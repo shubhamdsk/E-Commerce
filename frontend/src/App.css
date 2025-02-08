@@ -2,7 +2,7 @@
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
-  background-color: #242424;
+  /* background-color: #242424; */
   color: white;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -18,7 +18,9 @@ a {
 a:hover {
   color: #535bf2;
 }
-
+h1{
+  color: black;
+}
 button {
   border-radius: 8px;
   border: 1px solid transparent;
@@ -26,8 +28,9 @@ button {
   font-size: 1em;
   font-weight: 500;
   font-family: inherit;
-  background-color: #1a1a1a;
+  background-color: #13c1e8;
   cursor: pointer;
+  color: white;
   transition: border-color 0.25s;
 }
 button:hover {
