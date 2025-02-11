@@ -1,66 +1,88 @@
 import React, { useState } from "react";
 import Style from "./SignUp.module.css";
+import { url } from "../../environment/environment_url";
+import { useNavigate } from "react-router-dom";
 
 const SignUp = () => {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     name: "",
     email: "",
     password: "",
   });
+
   const [errors, setErrors] = useState({
     name: "",
     email: "",
     password: "",
   });
 
-  const validate = (field, value) => {
-    let error = "";
+  // Validation Method
+  const validateForm = () => {
+    let valid = true;
+    const newErrors = {};
 
-    if (!value.trim()) {
-      error = `${field} is required`;
-    } else {
-      if (field === "email" && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) {
-        error = "Invalid email format";
-      }
-      if (field === "password" && value.length < 6) {
-        error = "Password must be at least 6 characters long";
-      }
+    if (!formData.name.trim()) {
+      newErrors.name = "Name is required.";
+      valid = false;
     }
 
-    setErrors((prevErrors) => ({ ...prevErrors, [field]: error }));
+    if (!formData.email.trim()) {
+      newErrors.email = "Email is required.";
+      valid = false;
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
+      newErrors.email = "Invalid email format.";
+      valid = false;
+    }
+
+    if (!formData.password.trim()) {
+      newErrors.password = "Password is required.";
+      valid = false;
+    } else if (formData.password.length < 6) {
+      newErrors.password = "Password must be at least 6 characters.";
+      valid = false;
+    }
+
+    setErrors(newErrors);
+    return valid;
   };
 
+  // Handle Input Change
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      [name]: value,
-    });
-    validate(name, value);
+    setFormData({ ...formData, [name]: value });
+
+    if (errors[name]) {
+      setErrors({ ...errors, [name]: "" }); // Clear error when user starts typing
+    }
   };
 
-  const submitData = () => {
-    let valid = true;
+  // Form Submission
+  const handleSubmit = async () => {
+    if (!validateForm()) return; // Stop submission if validation fails
 
-    Object.keys(formData).forEach((key) => {
-      validate(key, formData[key]);
-      if (!formData[key].trim() || errors[key]) valid = false;
-    });
-
-    if (valid) {
-      console.log("Form submitted successfully", formData);
-      setFormData({
-        name: "",
-        email: "",
-        password: "",
+    try {
+      const response = await fetch(url.auth.register, {
+        method: "POST",
+        body: JSON.stringify(formData),
+        headers: { "Content-Type": "application/json" },
       });
+
+      if (response.ok) {
+        alert("Registration successful");
+        setFormData({ name: "", email: "", password: "" });
+        setErrors({});
+        navigate("/");
+      }
+    } catch (error) {
+      console.error("Error during registration:", error);
     }
   };
 
   return (
     <div className={Style["form-container"]}>
       <div className={Style["register"]}>
-        <h1 style={{ textAlign: "center" }}>Sign Up</h1>
+        <h1 style={{ marginLeft: "150px" }}>Sign Up</h1>
 
         <label htmlFor="name">Name</label>
         <input
@@ -100,7 +122,7 @@ const SignUp = () => {
 
         <button
           type="button"
-          onClick={submitData}
+          onClick={handleSubmit}
           className={Style["submit-button"]}
         >
           Sign Up
