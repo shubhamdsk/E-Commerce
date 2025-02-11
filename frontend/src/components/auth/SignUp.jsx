@@ -47,19 +47,17 @@ const SignUp = () => {
     return valid;
   };
 
-  // Handle Input Change
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
 
     if (errors[name]) {
-      setErrors({ ...errors, [name]: "" }); // Clear error when user starts typing
+      setErrors({ ...errors, [name]: "" }); 
     }
   };
 
-  // Form Submission
   const handleSubmit = async () => {
-    if (!validateForm()) return; // Stop submission if validation fails
+    if (!validateForm()) return; 
 
     try {
       const response = await fetch(url.auth.register, {
@@ -68,14 +66,35 @@ const SignUp = () => {
         headers: { "Content-Type": "application/json" },
       });
 
-      if (response.ok) {
-        alert("Registration successful");
-        setFormData({ name: "", email: "", password: "" });
-        setErrors({});
-        navigate("/");
+      const data = await response.json();
+
+      if (!response.ok) {
+        // Handle specific backend errors (email or password)
+        if (data.error && data.error.toLowerCase().includes("email")) {
+          setErrors((prev) => ({ ...prev, email: data.error }));
+        } else if (
+          data.error &&
+          data.error.toLowerCase().includes("password")
+        ) {
+          setErrors((prev) => ({ ...prev, password: data.error }));
+        } else {
+          throw new Error(data.error || "Registration failed");
+        }
+        return;
       }
+
+      alert("Registration successful");
+      setFormData({ name: "", email: "", password: "" });
+      navigate("/");
     } catch (error) {
-      console.error("Error during registration:", error);
+      console.error("Registration Error:", error);
+      setErrors((prev) => ({
+        ...prev,
+        email: error.message.includes("email") ? error.message : prev.email,
+        password: error.message.includes("password")
+          ? error.message
+          : prev.password,
+      }));
     }
   };
 
