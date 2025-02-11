@@ -34,3 +34,15 @@ app.post("/register", async (req, res) => {
   res.send({ message: "success", data: result });
 });
 ```
+
+##### handle cors issue-
+
+```javascript
+npm i cors
+```
+
+###### db/index.js
+
+```javascript
+app.use(cors());
+```
