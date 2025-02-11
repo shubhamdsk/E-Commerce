@@ -7,10 +7,10 @@
 
 .inputbox {
   display: block;
-  margin: 10px 0;
+  margin: 7px 0;
   padding: 10px;
   width: 100%;
-  max-width: 300px;
+  max-width: 400px;
   border-radius: 10px;
   border: 1px solid #14c4d1;
   box-sizing: border-box;
@@ -31,7 +31,7 @@
 
 .error-message {
   height: 20px;
-  margin-top: 5px;
+  margin-top: 1px;
   color: red !important;
   font-size: 12px;
 }
@@ -45,7 +45,9 @@ button {
   border-radius: 10px;
   cursor: pointer;
   width: 100%;
-  max-width: 300px;
+  max-width: 200px;
+  text-align: center;
+  margin-left: 90px;
 }
 
 button:hover {
