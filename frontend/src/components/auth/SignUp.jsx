@@ -1,10 +1,16 @@
-import React, { useState } from "react";
-import Style from "./SignUp.module.css";
-import { url } from "../../environment/environment_url";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { url } from "../../environment/environment_url";
+import Style from "./SignUp.module.css";
 
 const SignUp = () => {
   const navigate = useNavigate();
+  const auth = localStorage.getItem("user");
+  useEffect(() => {
+    if (auth) {
+      navigate("/");
+    }
+  }, []);
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -52,12 +58,12 @@ const SignUp = () => {
     setFormData({ ...formData, [name]: value });
 
     if (errors[name]) {
-      setErrors({ ...errors, [name]: "" }); 
+      setErrors({ ...errors, [name]: "" });
     }
   };
 
   const handleSubmit = async () => {
-    if (!validateForm()) return; 
+    if (!validateForm()) return;
 
     try {
       const response = await fetch(url.auth.register, {
@@ -84,6 +90,7 @@ const SignUp = () => {
       }
 
       alert("Registration successful");
+      localStorage.setItem("user", JSON.stringify(data));
       setFormData({ name: "", email: "", password: "" });
       navigate("/");
     } catch (error) {
