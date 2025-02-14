@@ -64,31 +64,28 @@ const SignUp = () => {
 
   const handleSubmit = async () => {
     if (!validateForm()) return;
-
+  
     try {
       const response = await fetch(url.auth.register, {
         method: "POST",
         body: JSON.stringify(formData),
         headers: { "Content-Type": "application/json" },
       });
-
+  
       const data = await response.json();
-
-      if (!response.ok) {
-        // Handle specific backend errors (email or password)
-        if (data.error && data.error.toLowerCase().includes("email")) {
-          setErrors((prev) => ({ ...prev, email: data.error }));
-        } else if (
-          data.error &&
-          data.error.toLowerCase().includes("password")
-        ) {
-          setErrors((prev) => ({ ...prev, password: data.error }));
+  
+      if (!data?.success) {
+        const errorMessage = data?.error;
+        if (errorMessage?.toLowerCase().includes("email")) {
+          setErrors((prev) => ({ ...prev, email: errorMessage }));
+        } else if (errorMessage?.toLowerCase().includes("password")) {
+          setErrors((prev) => ({ ...prev, password: errorMessage }));
         } else {
-          throw new Error(data.error || "Registration failed");
+          setErrors((prev) => ({ ...prev, general: errorMessage || "Registration failed" }));
         }
         return;
       }
-
+  
       alert("Registration successful");
       localStorage.setItem("user", JSON.stringify(data));
       setFormData({ name: "", email: "", password: "" });
@@ -97,13 +94,12 @@ const SignUp = () => {
       console.error("Registration Error:", error);
       setErrors((prev) => ({
         ...prev,
-        email: error.message.includes("email") ? error.message : prev.email,
-        password: error.message.includes("password")
-          ? error.message
-          : prev.password,
+        general: "Something went wrong. Please try again later.",
       }));
     }
   };
+  
+  
 
   return (
     <div className={Style["form-container"]}>
