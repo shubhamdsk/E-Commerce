@@ -1,7 +1,8 @@
 import React from "react";
 import { Route, Routes } from "react-router-dom";
 // ------------Components---------------------------;
-import SignUp from "./auth/SignUp";
+import SignUp from "./auth/signup/SignUp";
+import Login from "./auth/login/Login";
 import Private from "./pages/private/Private";
 import Profile from "./pages/profile/Profile";
 import Products from "./pages/products/Products";
@@ -19,6 +20,7 @@ const Main = () => {
           <Route path="/profile" element={<Profile />} />
         </Route>
         <Route path="/register" element={<SignUp />} />
+        <Route path="/login" element={<Login />} />
       </Routes>
     </div>
   );

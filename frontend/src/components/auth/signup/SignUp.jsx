@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { url } from "../../environment/environment_url";
+import { url } from "../../../environment/environment_url";
 import Style from "./SignUp.module.css";
 
 const SignUp = () => {

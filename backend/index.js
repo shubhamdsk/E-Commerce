@@ -47,20 +47,32 @@ app.post("/login", async (req, res) => {
   try {
     const { email, password } = req.body;
 
+    // Check if email and password are provided
     if (!email || !password) {
       return res
         .status(400)
         .send({ result: "Email and password are required", success: false });
     }
-    let user = await User.findOne({ email }).select("-password");
 
-    if (user) {
-      res.status(200).send({ success: true, status: 200, user });
-    } else {
-      res
-        .status(401)
-        .send({ success: false, status: 201, result: "No user found" });
+    // Find user by email
+    let user = await User.findOne({ email });
+
+    if (!user) {
+      return res.status(404).send({ success: false, result: "No user found" });
     }
+
+    // Compare provided password with stored password
+    if (password !== user.password) {
+      return res
+        .status(401)
+        .send({ success: false, result: "Invalid credentials" });
+    }
+
+    // Remove password before sending response
+    const userData = { ...user._doc };
+    delete userData.password;
+
+    res.status(200).send({ success: true, status: 200, user: userData });
   } catch (error) {
     console.error("Error during login:", error);
     res

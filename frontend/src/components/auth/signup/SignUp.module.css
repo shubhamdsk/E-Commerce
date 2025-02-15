@@ -1,0 +1,78 @@
+.form-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 80px;
+  align-items: center;
+}
+
+.inputbox {
+  display: block;
+  margin: 7px 0;
+  padding: 10px;
+  width: 100%;
+  max-width: 400px;
+  border-radius: 10px;
+  border: 1px solid #14c4d1;
+  box-sizing: border-box;
+}
+
+.register {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  flex-direction: column;
+  width: 100%;
+  max-width: 400px;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.error-message {
+  height: 20px;
+  margin-top: 1px;
+  color: red !important;
+  font-size: 12px;
+}
+
+button {
+  margin-top: 20px;
+  padding: 12px 20px;
+  background-color: #00438b;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  width: 100%;
+  max-width: 200px;
+  text-align: center;
+  margin-left: 90px;
+}
+
+button:hover {
+  background-color: #0758ae;
+}
+
+.register label {
+  color: black;
+  display: block;
+  margin-bottom: 5px;
+  font-size: 14px;
+}
+
+.register h1 {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+@media (max-width: 480px) {
+  .register {
+    width: 90%;
+  }
+  .inputbox,
+  button {
+    max-width: 100%;
+  }
+}

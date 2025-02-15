@@ -5,6 +5,7 @@ const baseUrl = dev;
 const url = {
   auth: {
     register: baseUrl + "register",
+    login: baseUrl + "login",
   },
 };
 export { url };
