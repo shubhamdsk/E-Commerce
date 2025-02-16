@@ -1,7 +1,16 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Style from "./Login.module.css";
+import { useNavigate } from "react-router-dom";
 import { url } from "../../../environment/environment_url";
 const Login = () => {
+  const navigate = useNavigate();
+  const auth = localStorage.getItem("user");
+  useEffect(() => {
+    if (auth) {
+      navigate("/");
+    }
+  }, []);
+
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -9,6 +18,7 @@ const Login = () => {
   const [error, setError] = useState({
     email: "",
     password: "",
+    general: "",
   });
 
   const handleChange = (e) => {
@@ -19,10 +29,11 @@ const Login = () => {
       [name]: value,
     });
 
-    setError({
-      ...error,
+    setError((prevError) => ({
+      ...prevError,
       [name]: "",
-    });
+      general: "",
+    }));
   };
 
   const handleValidate = () => {
@@ -49,7 +60,9 @@ const Login = () => {
   };
 
   const handleLogin = async () => {
-    if (handleValidate()) {
+    if (!handleValidate()) return;
+
+    try {
       const response = await fetch(url.auth.login, {
         method: "POST",
         body: JSON.stringify(formData),
@@ -57,10 +70,38 @@ const Login = () => {
           "Content-Type": "application/json",
         },
       });
+
       const result = await response.json();
-      console.log(result);
+      console.log("Backend Response:", result);
+
+      if (!result.success) {
+        setError({
+          email: result.error.toLowerCase().includes("email")
+            ? result.error
+            : "",
+          password: result.error.toLowerCase().includes("password")
+            ? result.error
+            : "",
+          general:
+            !result.error.toLowerCase().includes("email") &&
+            !result.error.toLowerCase().includes("password")
+              ? result.error
+              : "",
+        });
+        return;
+      }
+      if (result.user) {
+        localStorage.setItem("user", JSON.stringify(result));
+        navigate("/");
+      }
+
+      console.log("Login Successful", result);
+    } catch (error) {
+      console.error("Login error:", error);
+      setError({ general: "Login failed. Please try again." });
     }
   };
+
   return (
     <div className={Style["form-container"]}>
       <div className={Style["register"]}>
@@ -88,6 +129,7 @@ const Login = () => {
           placeholder="Enter password here"
         />
         <div className={Style["error-message"]}>{error.password}</div>
+        <div className={Style["general-message"]}>{error.general}</div>
 
         <button
           type="button"

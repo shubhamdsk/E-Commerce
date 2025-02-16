@@ -36,6 +36,14 @@
   font-size: 12px;
 }
 
+.general-message {
+  height: 20px;
+  margin-top: 1px;
+  color: red !important;
+  font-size: 10pt;
+  margin-left: 35%;
+}
+
 button {
   margin-top: 20px;
   padding: 12px 20px;

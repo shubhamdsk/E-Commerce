@@ -47,37 +47,31 @@ app.post("/login", async (req, res) => {
   try {
     const { email, password } = req.body;
 
-    // Check if email and password are provided
     if (!email || !password) {
       return res
         .status(400)
-        .send({ result: "Email and password are required", success: false });
+        .json({ error: "Email and password are required", success: false });
     }
 
-    // Find user by email
     let user = await User.findOne({ email });
 
     if (!user) {
-      return res.status(404).send({ success: false, result: "No user found" });
+      return res.status(404).json({ success: false, error: "No user found" });
     }
 
-    // Compare provided password with stored password
     if (password !== user.password) {
       return res
         .status(401)
-        .send({ success: false, result: "Invalid credentials" });
+        .json({ success: false, error: "Invalid credentials" });
     }
 
-    // Remove password before sending response
     const userData = { ...user._doc };
     delete userData.password;
 
-    res.status(200).send({ success: true, status: 200, user: userData });
+    res.status(200).json({ success: true, user: userData });
   } catch (error) {
     console.error("Error during login:", error);
-    res
-      .status(500)
-      .send({ success: false, status: 500, result: "Server error" });
+    res.status(500).json({ success: false, error: "Server error" });
   }
 });
 
