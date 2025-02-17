@@ -2,6 +2,7 @@ import express from "express";
 import cors from "cors";
 import "./db/config.js";
 import User from "./db/user.js";
+import Product from "./db/product.js";
 
 const app = express();
 app.use(express.json());
@@ -74,6 +75,28 @@ app.post("/login", async (req, res) => {
     res.status(500).json({ success: false, error: "Server error" });
   }
 });
+
+// Add products
+app.post("/add-product", async (req, res) => {
+  try {
+    const { name, price, category, userId, company } = req.body;
+
+    if (!name || !price || !category || !userId || !company) {
+      return res.status(400).json({ success: false, status: 400, error: "All fields are required" });
+    }
+
+    const product = new Product({ name, price, category, userId, company });
+    const result = await product.save();
+
+    res.status(201).json({ success: true, status: 201, message: "Product added successfully", product: result });
+    console.log(result)
+
+  } catch (error) {
+    console.error("Error adding product:", error);
+    res.status(500).json({ success: false, status: 500, error: "Internal Server Error" });
+  }
+});
+
 
 const PORT = 1709;
 app.listen(PORT, () => {
