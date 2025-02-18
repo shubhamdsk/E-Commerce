@@ -84,7 +84,7 @@ const Login = () => {
             : "",
           general:
             !result.error.toLowerCase().includes("email") &&
-            !result.error.toLowerCase().includes("password")
+              !result.error.toLowerCase().includes("password")
               ? result.error
               : "",
         });
@@ -129,15 +129,14 @@ const Login = () => {
           placeholder="Enter password here"
         />
         <div className={Style["error-message"]}>{error.password}</div>
-        <div className={Style["general-message"]}>{error.general}</div>
 
         <button
           type="button"
           onClick={handleLogin}
-          className={Style["submit-button"]}
-        >
+          className={Style["submit-button"]}>
           Login
         </button>
+        <div className={Style["general-message"]}>{error.general}</div>
       </div>
     </div>
   );
