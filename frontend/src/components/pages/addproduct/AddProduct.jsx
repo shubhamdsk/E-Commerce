@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import Style from "./AddProduct.module.css";
+import { url } from "../../../environment/environment_url";
 
 const AddProduct = () => {
   const [formData, setFormData] = useState({
@@ -16,6 +17,8 @@ const AddProduct = () => {
     productCompany: "",
   });
 
+  const [backendError, setBackendError] = useState(""); // State for backend error messages
+
   const handleChange = (e) => {
     const { name, value } = e.target;
 
@@ -28,6 +31,8 @@ const AddProduct = () => {
       ...prevErrors,
       [name]: "",
     }));
+
+    setBackendError(""); // Clear backend error when user types
   };
 
   const handleValidate = () => {
@@ -55,22 +60,60 @@ const AddProduct = () => {
     return valid;
   };
 
-  const handleSave = () => {
-    if (!handleValidate()) return;
-    console.log({ formData });
+  const handleSave = async () => {
+    const user = JSON.parse(localStorage.getItem("user"));
+    const userId = user?.user?._id;
 
-    setFormData({
-      productName: "",
-      productPrice: "",
-      productCategory: "",
-      productCompany: "",
-    });
+    if (!userId) {
+      setBackendError("User authentication failed. Please log in again.");
+      return;
+    }
+
+    setBackendError("");
+    if (!handleValidate()) return;
+
+    const payload = {
+      name: formData.productName,
+      price: formData.productPrice,
+      category: formData.productCategory,
+      company: formData.productCompany,
+      userId,
+    };
+
+    console.log("Payload being sent:", payload);
+
+    try {
+      const response = await fetch(url.product.add_product, {
+        method: "POST",
+        body: JSON.stringify(payload),
+        headers: { "Content-Type": "application/json" },
+      });
+
+      const result = await response.json();
+      console.log(result);
+
+      if (response.ok && result.success) {
+        setFormData({
+          productName: "",
+          productPrice: "",
+          productCategory: "",
+          productCompany: "",
+        });
+        setBackendError("");
+      } else {
+        setBackendError(result.error || "Failed to add product. Please try again.");
+      }
+    } catch (error) {
+      console.error("Error:", error);
+      setBackendError("Network error! Please check your connection.");
+    }
   };
 
   return (
     <div className={Style["form-container"]}>
       <div className={Style["add-product"]}>
-        <h1 style={{ textAlign: "center", marginLeft: '30%' }}>Add product</h1>
+        <h1 style={{ textAlign: "center", marginLeft: "30%" }}>Add product</h1>
+
         <label htmlFor="productName">Product Name</label>
         <input
           type="text"
@@ -82,7 +125,7 @@ const AddProduct = () => {
         />
         <div className={Style["error-message"]}>{error.productName}</div>
 
-        <label htmlFor="productPrice">Product Price </label>
+        <label htmlFor="productPrice">Product Price</label>
         <input
           type="number"
           name="productPrice"
@@ -93,7 +136,7 @@ const AddProduct = () => {
         />
         <div className={Style["error-message"]}>{error.productPrice}</div>
 
-        <label htmlFor="productCategory">Product Category </label>
+        <label htmlFor="productCategory">Product Category</label>
         <input
           type="text"
           name="productCategory"
@@ -104,7 +147,7 @@ const AddProduct = () => {
         />
         <div className={Style["error-message"]}>{error.productCategory}</div>
 
-        <label htmlFor="productCompany">Product Company </label>
+        <label htmlFor="productCompany">Product Company</label>
         <input
           type="text"
           name="productCompany"
@@ -116,6 +159,7 @@ const AddProduct = () => {
         <div className={Style["error-message"]}>{error.productCompany}</div>
 
         <button onClick={handleSave}>Add Product</button>
+        <div className={Style["backend-error"]}>{backendError}</div>
       </div>
     </div>
   );

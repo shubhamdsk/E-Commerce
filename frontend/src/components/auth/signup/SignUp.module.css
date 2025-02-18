@@ -33,7 +33,7 @@
   height: 20px;
   margin-top: 1px;
   color: red !important;
-  font-size: 12px;
+  font-size: 14px;
 }
 
 button {
@@ -54,11 +54,12 @@ button:hover {
   background-color: #0758ae;
 }
 
-.register label {
-  color: black;
+label {
+  color: #0170C8;
   display: block;
   margin-bottom: 5px;
   font-size: 14px;
+  font-weight: 500;
 }
 
 .register h1 {
