@@ -7,5 +7,8 @@ const url = {
     register: baseUrl + "register",
     login: baseUrl + "login",
   },
+  product: {
+    add_product: baseUrl + "add-product"
+  }
 };
 export { url };

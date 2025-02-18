@@ -64,16 +64,16 @@ const SignUp = () => {
 
   const handleSubmit = async () => {
     if (!validateForm()) return;
-  
+
     try {
       const response = await fetch(url.auth.register, {
         method: "POST",
         body: JSON.stringify(formData),
         headers: { "Content-Type": "application/json" },
       });
-  
+
       const data = await response.json();
-  
+
       if (!data?.success) {
         const errorMessage = data?.error;
         if (errorMessage?.toLowerCase().includes("email")) {
@@ -85,7 +85,7 @@ const SignUp = () => {
         }
         return;
       }
-  
+
       alert("Registration successful");
       localStorage.setItem("user", JSON.stringify(data));
       setFormData({ name: "", email: "", password: "" });
@@ -98,8 +98,8 @@ const SignUp = () => {
       }));
     }
   };
-  
-  
+
+
 
   return (
     <div className={Style["form-container"]}>
@@ -145,10 +145,7 @@ const SignUp = () => {
         <button
           type="button"
           onClick={handleSubmit}
-          className={Style["submit-button"]}
-        >
-          Sign Up
-        </button>
+          className={Style["submit-button"]}>Sign Up</button>
       </div>
     </div>
   );

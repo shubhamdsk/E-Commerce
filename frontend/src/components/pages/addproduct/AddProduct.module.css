@@ -24,7 +24,7 @@
    flex-direction: column;
    width: 100%;
    max-width: 400px;
-   padding: 20px;
+   padding: 15px;
    background-color: #fff;
    border-radius: 10px;
    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -35,6 +35,13 @@
    margin-top: 2px;
    color: red !important;
    font-size: 12px;
+ }
+ .backend-error {
+   height: 20px;
+   margin-top: 2px;
+   color: red !important;
+   font-size: 12px;
+   margin-left: 20%;
  }
  
  button {
@@ -56,11 +63,12 @@
  }
  
  .add-product label {
-   color: black;
-   display: block;
-   margin-bottom: 5px;
-   font-size: 14px;
- }
+  color: #0170C8;
+  display: block;
+  margin-bottom: 5px;
+  font-size: 14px;
+  font-weight: 500;
+}
  
  .add-product h1 {
    text-align: center;
