@@ -1,0 +1,32 @@
+/* Products.module.css */
+.table-container {
+   width: 80%;
+   margin: auto;
+   margin-top: 20px;
+}
+
+.table {
+   width: 100%;
+   border-collapse: collapse;
+   color: black;
+   text-align: center;
+}
+
+.table th,
+.table td {
+   border: 1px solid #ddd;
+   padding: 10px;
+}
+
+.table th {
+   background-color: #68bafc;
+   font-weight: bold;
+}
+
+.table tbody tr:nth-child(even) {
+   background-color: #d0e2fe;
+}
+
+.table tbody tr:hover {
+   background-color: #eadccf;
+}
