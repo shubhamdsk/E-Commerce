@@ -8,7 +8,8 @@ const url = {
     login: baseUrl + "login",
   },
   product: {
-    add_product: baseUrl + "add-product"
+    add_product: baseUrl + "add-product",
+    get_product: baseUrl + "get-products"
   }
 };
 export { url };
