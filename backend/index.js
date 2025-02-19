@@ -12,16 +12,15 @@ app.post("/register", async (req, res) => {
   try {
     const { name, email, password } = req.body;
 
-    // Check if email is already registered
     const existingUser = await User.findOne({ email });
     if (existingUser) {
       return res
         .status(200)
-        .json({ success: false, error: "Email is already registered" });
+        .send({ success: false, error: "Email is already registered" });
     }
 
     if (password.length < 6) {
-      return res.status(200).json({
+      return res.status(200).send({
         success: false,
         error: "Password must be at least 6 characters long",
       });
@@ -32,14 +31,14 @@ app.post("/register", async (req, res) => {
     result = result.toObject();
     delete result.password;
 
-    res.status(201).json({
+    res.status(201).send({
       success: true,
       message: "Registration successful",
       data: result,
     });
   } catch (error) {
     console.error("Error in registration:", error);
-    res.status(500).json({ success: false, error: "Internal server error" });
+    res.status(500).send({ success: false, error: "Internal server error" });
   }
 });
 
@@ -51,28 +50,28 @@ app.post("/login", async (req, res) => {
     if (!email || !password) {
       return res
         .status(400)
-        .json({ error: "Email and password are required", success: false });
+        .send({ error: "Email and password are required", success: false });
     }
 
     let user = await User.findOne({ email });
 
     if (!user) {
-      return res.status(404).json({ success: false, error: "No user found" });
+      return res.status(404).send({ success: false, error: "No user found" });
     }
 
     if (password !== user.password) {
       return res
         .status(401)
-        .json({ success: false, error: "Invalid credentials" });
+        .send({ success: false, error: "Invalid credentials" });
     }
 
     const userData = { ...user._doc };
     delete userData.password;
 
-    res.status(200).json({ success: true, user: userData });
+    res.status(200).send({ success: true, user: userData });
   } catch (error) {
     console.error("Error during login:", error);
-    res.status(500).json({ success: false, error: "Server error" });
+    res.status(500).send({ success: false, error: "Server error" });
   }
 });
 
@@ -82,18 +81,47 @@ app.post("/add-product", async (req, res) => {
     const { name, price, category, userId, company } = req.body;
 
     if (!name || !price || !category || !userId || !company) {
-      return res.status(400).json({ success: false, status: 400, error: "All fields are required" });
+      return res.status(400).send({ success: false, status: 400, error: "All fields are required" });
     }
 
     const product = new Product({ name, price, category, userId, company });
     const result = await product.save();
 
-    res.status(201).json({ success: true, status: 201, message: "Product added successfully", product: result });
+    res.status(201).send({ success: true, status: 201, message: "Product added successfully", product: result });
     console.log(result)
 
   } catch (error) {
     console.error("Error adding product:", error);
-    res.status(500).json({ success: false, status: 500, error: "Internal Server Error" });
+    res.status(500).send({ success: false, status: 500, error: "Internal Server Error" });
+  }
+});
+
+// Get products
+app.get('/get-products', async (req, res) => {
+  try {
+    let products = await Product.find().lean();
+
+    if (products.length > 0) {
+      return res.status(200).send({
+        message: "Products fetched successfully",
+        status: 200,
+        products
+      });
+    }
+
+    return res.status(200).send({
+      message: 'No products found',
+      status: 200,
+      products: []
+    });
+
+  } catch (error) {
+    console.error("Error fetching products:", error);
+    return res.status(500).send({
+      message: "Internal Server Error",
+      status: 500,
+      error: error.message
+    });
   }
 });
 
