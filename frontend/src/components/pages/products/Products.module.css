@@ -1,4 +1,3 @@
-/* Products.module.css */
 .table-container {
    width: 80%;
    margin: auto;
@@ -12,21 +11,36 @@
    text-align: center;
 }
 
-.table th,
-.table td {
+.table th {
    border: 1px solid #ddd;
    padding: 10px;
-}
-
-.table th {
    background-color: #68bafc;
    font-weight: bold;
+}
+
+
+.table td {
+   border: 1px solid #ddd;
+   padding: 5px;
 }
 
 .table tbody tr:nth-child(even) {
    background-color: #d0e2fe;
 }
 
-.table tbody tr:hover {
-   background-color: #eadccf;
+.deleteBtn {
+   background-color: #d9534f;
+   padding: 5px 10px;
+   color: white;
+   border: none;
+   border-radius: 5px;
+   cursor: pointer;
+   width: auto;
+   min-width: 60px;
+   text-align: center;
+   font-size: 14px;
+}
+
+.deleteBtn:hover {
+   background-color: #c9302c;
 }
