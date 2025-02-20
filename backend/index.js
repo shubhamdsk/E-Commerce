@@ -125,6 +125,29 @@ app.get('/get-products', async (req, res) => {
   }
 });
 
+// Delete product
+app.delete('/product/:id', async (req, resp) => {
+  try {
+    const { id } = req.params;
+    const product = await Product.findById(id);
+
+    if (!product) {
+      return resp.status(200).send({ success: false, status: 200, message: "Product not found" });
+    }
+    
+    const response = await Product.deleteOne({ _id: id });
+
+    if (response.deletedCount === 1) {
+      resp.status(200).send({ success: true, status: 200, message: "Product deleted successfully" });
+    } else {
+      resp.status(400).send({ success: false, status: 400, message: "Failed to delete product" });
+    }
+  } catch (error) {
+    console.error("Error deleting product:", error);
+    resp.status(500).send({ success: false, status: 500, message: "Internal Server Error" });
+  }
+});
+
 
 const PORT = 1709;
 app.listen(PORT, () => {
