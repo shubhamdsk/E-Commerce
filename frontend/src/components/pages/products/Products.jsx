@@ -36,6 +36,30 @@ const Products = () => {
     getProducts();
   }, []);
 
+  const handleDelete = async (id) => {
+    setLoading(true);
+
+    try {
+      const response = await fetch(url.product.delete_product + id, {
+        method: "DELETE",
+      });
+      const result = await response.json();
+      console.log({ result });
+
+      if (result.success) {
+        getProducts();
+      } else {
+        console.log("Failed to delete product:", result.message);
+        setLoading(false);
+      }
+    } catch (error) {
+      console.log("Error deleting product:", error);
+      setLoading(false);
+    }
+  };
+
+
+
   return (
     <div>
       <h1 style={{ textAlign: "center", marginTop: "50px" }}>Products List</h1>
@@ -56,6 +80,7 @@ const Products = () => {
               <th>Price</th>
               <th>Category</th>
               <th>Company</th>
+              <th >Operation</th>
             </tr>
           </thead>
           <tbody>
@@ -67,11 +92,12 @@ const Products = () => {
                   <td>{product.price}</td>
                   <td>{product.category}</td>
                   <td>{product.company}</td>
+                  <td><button className={styles["deleteBtn"]} onClick={() => handleDelete(product._id)}>Delete</button></td>
                 </tr>
               ))
             ) : (
               <tr>
-                <td colSpan="5" style={{ textAlign: "center", padding: "15px", color: "black" }}>
+                <td colSpan="6" style={{ textAlign: "center", padding: "15px", color: "black" }}>
                   No products available.
                 </td>
               </tr>

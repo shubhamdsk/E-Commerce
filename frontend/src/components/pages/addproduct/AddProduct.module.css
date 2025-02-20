@@ -1,118 +1,118 @@
 .form-container {
-   display: flex;
-   justify-content: center;
-   margin-top: 60px;
-   align-items: center;
-   padding: 10px;
- }
- 
- .inputbox {
-   display: block;
-   margin: 7px 0;
-   padding: 10px;
-   width: 100%;
-   max-width: 400px;
-   border-radius: 10px;
-   border: 1px solid #14c4d1;
-   box-sizing: border-box;
- }
- 
- .add-product {
-   display: flex;
-   justify-content: center;
-   align-items: flex-start;
-   flex-direction: column;
-   width: 100%;
-   max-width: 400px;
-   padding: 15px;
-   background-color: #fff;
-   border-radius: 10px;
-   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
- }
- 
- .error-message {
-   height: 20px;
-   margin-top: 2px;
-   color: red !important;
-   font-size: 12px;
- }
- .backend-error {
-   height: 20px;
-   margin-top: 2px;
-   color: red !important;
-   font-size: 12px;
-   margin-left: 20%;
- }
- 
- button {
-   margin-top: 20px;
-   padding: 12px 20px;
-   background-color: #00438b;
-   color: white;
-   border: none;
-   border-radius: 10px;
-   cursor: pointer;
-   width: 100%;
-   max-width: 200px;
-   text-align: center;
-   transition: background-color 0.3s ease-in-out;
- }
- 
- button:hover {
-   background-color: #0758ae;
- }
- 
- .add-product label {
+  display: flex;
+  justify-content: center;
+  margin-top: 60px;
+  align-items: center;
+  padding: 10px;
+}
+
+.inputbox {
+  display: block;
+  margin: 7px 0;
+  padding: 10px;
+  width: 100%;
+  max-width: 400px;
+  border-radius: 10px;
+  border: 1px solid #14c4d1;
+  box-sizing: border-box;
+}
+
+.add-product {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  flex-direction: column;
+  width: 100%;
+  max-width: 400px;
+  padding: 15px;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.error-message {
+  height: 20px;
+  margin-top: 2px;
+  color: red !important;
+  font-size: 12px;
+}
+
+.backend-error {
+  height: 20px;
+  margin-top: 2px;
+  color: red !important;
+  font-size: 12px;
+  margin-left: 20%;
+}
+
+.addProduct {
+  margin-top: 20px;
+  padding: 12px 20px;
+  background-color: #00438b;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  width: 100%;
+  max-width: 200px;
+  text-align: center;
+  transition: background-color 0.3s ease-in-out;
+}
+
+.addProduct:hover {
+  background-color: #0758ae;
+}
+
+.add-product label {
   color: #0170C8;
   display: block;
   margin-bottom: 5px;
   font-size: 14px;
   font-weight: 500;
 }
- 
- .add-product h1 {
-   text-align: center;
-   margin-bottom: 20px;
-   color: #333;
- }
- 
- /* Responsive Design */
- @media (max-width: 768px) {
-   .add-product {
-     width: 90%;
-     max-width: 100%;
-     padding: 15px;
-   }
- 
-   .inputbox {
-     width: 100%;
-     max-width: 100%;
-   }
- 
-   button {
-     max-width: 100%;
-   }
- }
- 
- @media (max-width: 480px) {
-   .form-container {
-     margin-top: 40px;
-     padding: 5px;
-   }
- 
-   .add-product {
-     width: 95%;
-     padding: 15px;
-   }
- 
-   .inputbox,
-   button {
-     max-width: 100%;
-     width: 100%;
-   }
- 
-   h1 {
-     font-size: 20px;
-   }
- }
- 
+
+.add-product h1 {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .add-product {
+    width: 90%;
+    max-width: 100%;
+    padding: 15px;
+  }
+
+  .inputbox {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  button {
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .form-container {
+    margin-top: 40px;
+    padding: 5px;
+  }
+
+  .add-product {
+    width: 95%;
+    padding: 15px;
+  }
+
+  .inputbox,
+  button {
+    max-width: 100%;
+    width: 100%;
+  }
+
+  h1 {
+    font-size: 20px;
+  }
+}

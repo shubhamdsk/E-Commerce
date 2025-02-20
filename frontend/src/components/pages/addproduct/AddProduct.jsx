@@ -1,8 +1,11 @@
 import React, { useState } from "react";
+import { useNavigate } from 'react-router-dom'
 import Style from "./AddProduct.module.css";
 import { url } from "../../../environment/environment_url";
 
 const AddProduct = () => {
+
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     productName: "",
     productPrice: "",
@@ -17,7 +20,7 @@ const AddProduct = () => {
     productCompany: "",
   });
 
-  const [backendError, setBackendError] = useState(""); // State for backend error messages
+  const [backendError, setBackendError] = useState("");
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -32,7 +35,7 @@ const AddProduct = () => {
       [name]: "",
     }));
 
-    setBackendError(""); // Clear backend error when user types
+    setBackendError("");
   };
 
   const handleValidate = () => {
@@ -80,8 +83,6 @@ const AddProduct = () => {
       userId,
     };
 
-    console.log("Payload being sent:", payload);
-
     try {
       const response = await fetch(url.product.add_product, {
         method: "POST",
@@ -100,6 +101,7 @@ const AddProduct = () => {
           productCompany: "",
         });
         setBackendError("");
+        navigate('/')
       } else {
         setBackendError(result.error || "Failed to add product. Please try again.");
       }
@@ -158,7 +160,7 @@ const AddProduct = () => {
         />
         <div className={Style["error-message"]}>{error.productCompany}</div>
 
-        <button onClick={handleSave}>Add Product</button>
+        <button className={Style["addProduct"]} onClick={handleSave}>Add Product</button>
         <div className={Style["backend-error"]}>{backendError}</div>
       </div>
     </div>

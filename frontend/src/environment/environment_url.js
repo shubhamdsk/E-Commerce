@@ -9,7 +9,8 @@ const url = {
   },
   product: {
     add_product: baseUrl + "add-product",
-    get_product: baseUrl + "get-products"
+    get_product: baseUrl + "get-products",
+    delete_product: baseUrl + 'product/'
   }
 };
 export { url };
